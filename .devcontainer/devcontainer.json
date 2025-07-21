@@ -1,0 +1,15 @@
+{
+  "name": "Aeon Demo",
+
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+
+  "onCreateCommand": "echo \"Testing aeon...\" && uv run python -m aeon --version || echo You need to install uv first: https://docs.astral.sh/uv/getting-started/installation/\"",
+
+  "customizations": {
+    "vscode" : {
+      "extensions" : [ "AlcidesFonseca.aeon-lang" ]
+    }
+  }
+}
