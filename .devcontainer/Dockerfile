@@ -1,4 +1,4 @@
-ROM mcr.microsoft.com/devcontainers/base:jammy
+FROM mcr.microsoft.com/devcontainers/base:jammy
 
 USER vscode
 WORKDIR /home/vscode
