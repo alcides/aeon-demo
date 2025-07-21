@@ -1,0 +1,10 @@
+image:
+  file: .docker/gitpod/Dockerfile
+
+vscode:
+  extensions:
+    - AlcidesFonseca.aeon-lang
+
+tasks:
+  - init: echo "Hello"
+  - command: sudo apt-get --assume-yes install gcc
