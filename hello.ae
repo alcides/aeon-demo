@@ -1,7 +1,8 @@
+
 def hello (a:Int) : {x:Int | x > a} {
   a + 1
 }
 
-def main (x:Int) {
+def main (x:Int) : Unit {
   print (hello 3)
 }
