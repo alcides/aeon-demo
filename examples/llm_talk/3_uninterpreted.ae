@@ -11,4 +11,4 @@ def rm (p:Person | admin p) (f:String | f != "/") : Unit := unit
 
 def main (_:Int) : Unit :=
     let u: {p:Person| admin p} := register_user "Joe" 30 in
-    rm u "/"
+    rm u "/folder"

@@ -1,4 +1,4 @@
-open LearningEnsembles
+open LearningNaiveBayes
 
 
 def generate_model_smote (path: String) (target_col: String) : SklearnClassifier :=
@@ -8,4 +8,4 @@ def generate_model_smote (path: String) (target_col: String) : SklearnClassifier
     let parts := split ds 0.7 true in
     let train0 := train_of parts in
     let train := if is_multiclass train0 then smote train0 else train0 in
-    random_forest_classifier train
+    complement_nb train
