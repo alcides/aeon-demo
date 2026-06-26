@@ -1,0 +1,14 @@
+type Person
+
+def admin (p:Person) : Bool := uninterpreted
+
+def register_user (name:String) (age:Int) : Person := native "(name, age)"
+def register_admin (name:String) (age:Int) : {p:Person | admin p} := native "(name, age)"
+
+
+def rm (p:Person | admin p) (f:String | f != "/") : Unit := unit
+
+
+def main (_:Int) : Unit :=
+    let u: {p:Person| admin p} := register_user "Joe" 30 in
+    rm u "/"

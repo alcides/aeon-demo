@@ -1,0 +1,3 @@
+def average (total:Int) (count:{x:Int | x != 0}) : Int := total / count;
+
+def main (_:Int) : Unit := print (average 10 2)

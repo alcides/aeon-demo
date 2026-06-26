@@ -1,0 +1,38 @@
+# ============================================================
+# 5. IN THE WILD (neural networks):  refinements as a verification spec
+# ============================================================
+#
+# A refinement on the RESULT is a postcondition — a specification the body must
+# live up to, proved by Z3 for ALL inputs, with no test suite. `abs` claims to
+# return a non-negative number of the same magnitude; both branches are checked.
+def abs (x:Int) : {y:Int | y >= 0 && (y = x || y = 0 - x)} :=
+    if x >= 0 then x else 0 - x;
+
+# The real payoff: verifying a NEURAL NETWORK. We prove two of the headline
+# properties from the NN-verification literature — monotonicity and local
+# (adversarial) robustness — on a small ReLU net, as types rather than tests.
+
+# ReLU, specified EXACTLY: the return type pins y = max(x, 0), so every call site
+# reasons about the activation precisely, not as an opaque function.
+def relu (x:Float) : {y:Float | y >= 0.0 && y >= x && (y = x || y = 0.0)} :=
+    if x >= 0.0 then x else 0.0;
+
+# The network: a width-2 hidden layer with non-negative weights, then a linear
+# readout.   h1 = relu(2x + 1)   h2 = relu(x - 1)   out = 2*h1 + 3*h2
+# (inlined into each theorem so the checker sees the whole computation).
+
+# PROPERTY 1 — Monotonicity: a larger input never decreases the output. The
+# hypothesis xp >= x lives in xp's type; the conclusion d >= 0 in the result.
+def monotone (x:Float) (xp:{v:Float | v >= x}) : {d:Float | d >= 0.0} :=
+    (2.0 * relu (2.0 * xp + 1.0) + 3.0 * relu (xp - 1.0))
+  - (2.0 * relu (2.0 * x  + 1.0) + 3.0 * relu (x  - 1.0));
+
+# PROPERTY 2 — Local robustness: an input perturbed by at most 1.0 moves the
+# output by at most the network's Lipschitz constant, 2*2 + 3*1 = 7. This is the
+# adversarial-robustness guarantee — PROVED by Z3, not sampled or estimated.
+def robust (x:Float) (xp:{v:Float | x - 1.0 <= v && v <= x + 1.0})
+    : {d:Float | 0.0 - 7.0 <= d && d <= 7.0} :=
+    (2.0 * relu (2.0 * xp + 1.0) + 3.0 * relu (xp - 1.0))
+  - (2.0 * relu (2.0 * x  + 1.0) + 3.0 * relu (x  - 1.0));
+
+def main (_:Int) : Unit := print (robust 1.0 1.5)

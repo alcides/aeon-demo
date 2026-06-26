@@ -1,0 +1,12 @@
+open Image
+open Color
+
+
+def main (steps:Int) : Image := white : Color := Color.mk 255 255 255;
+    green : Color := Color.mk 0 255 0;
+    image0 := Image.mk 64 64 white;
+    image1 := image0.draw_rectangle 0 0 32 32 white;
+    image2 := image1.draw_rectangle 0 32 32 32 green;
+    image3 := image2.draw_rectangle 32 0 32 32 green;
+    image4 := image3.draw_rectangle 32 32 32 32 white;
+    image4;

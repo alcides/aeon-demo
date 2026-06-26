@@ -1,0 +1,8 @@
+# ============================================================
+# 1. THE PROBLEM:  ordinary types are too coarse
+# ============================================================
+
+def max (a:Int) (b:Int) : Int :=
+    if a > b then a else a
+
+def main (_:Int) : Unit := print (max 2 9)   # prints 2, not 9 — and types are happy
