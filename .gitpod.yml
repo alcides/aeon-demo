@@ -6,5 +6,5 @@ vscode:
     - AlcidesFonseca.aeon-lang
 
 tasks:
-  - init: echo "Hello"
-  - command: sudo apt-get --assume-yes install gcc
+  - init: uv pip install aeonlang
+    command: aeon hello.ae
