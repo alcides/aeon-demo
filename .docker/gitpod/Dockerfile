@@ -22,6 +22,11 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
 ENV PATH="/home/gitpod/.local/bin:${PATH}"
 
+# Keep the project command available in every Gitpod terminal.
+ENV VIRTUAL_ENV="/home/gitpod/.venv"
+ENV PATH="/home/gitpod/.venv/bin:${PATH}"
+RUN uv venv /home/gitpod/.venv && uv pip install --python /home/gitpod/.venv/bin/python aeonlang
+
 # ssh to github once to bypass the unknown fingerprint warning
 RUN ssh -o StrictHostKeyChecking=no github.com || true
 

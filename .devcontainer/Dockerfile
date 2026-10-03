@@ -10,5 +10,7 @@ RUN sudo apt update && sudo apt install -y python3-dev
 RUN uv venv
 RUN uv pip install aeonlang
 
+ENV PATH="/home/vscode/.venv/bin:${PATH}"
+WORKDIR /workspaces/aeon-demo
 
 
